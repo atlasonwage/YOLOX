@@ -5,7 +5,7 @@
 class ASTBoolExpr : public ASTBool
 {
 public:
-    enum Op {
+    static enum Op {
         LTHN,
         LTHNEQ,
         GTHN,
@@ -21,9 +21,9 @@ public:
     ASTBool * const pLeft;
     ASTBool * const pRight;
 
-    ASTBool(unsigned int t_referenceLine, const Op t_op, 
+    ASTBoolExpr(unsigned int t_referenceLine, const Op t_op, 
         ASTBool * const t_pLeft, ASTVar * const t_pRight = nullptr);
-    ~ASTBool();
+    ~ASTBoolExpr();
     virtual std::string process() const override;
 
     virtual void inverse() override;

@@ -1,12 +1,11 @@
 #pragma once
-#include "ASTNode.h"
 #include "ASTVar.h"
 
 //Implements a variable operation
-class ASTOp : public ASTNode
+class ASTOp : public ASTOpParam
 {
 public:
-    enum class Op {
+    static enum Op {
         ADD,
         SUB,
         MUL,
@@ -34,11 +33,15 @@ public:
         ACOS,
         ATAN
     };
-    const Op op;
-    ASTVar * const pLeft;
-    ASTVar * const pRight;
 
-    ASTBinary();
-    ~ASTBinary();
+    ASTOp(unsigned int t_referenceLine, const Op t_op, 
+        ASTOpParam * const t_pLeft, ASTOpParam * const t_pRight = nullptr);
+    ~ASTOp();
     virtual std::string process() const override;
+private:
+    static std::string opString(const Op t_op);
+
+    Op m_op;
+    ASTOpParam * m_pLeft;
+    ASTOpParam * m_pRight;
 };

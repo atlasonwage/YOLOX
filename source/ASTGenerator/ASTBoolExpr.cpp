@@ -1,6 +1,6 @@
-#include "ASTBool.h"
+#include "ASTBoolExpr.h"
 
-ASTBool::ASTBool(unsigned int t_referenceLine, const Op t_op, 
+ASTBoolExpr::ASTBoolExpr(unsigned int t_referenceLine, const Op t_op, 
     ASTVar * const t_pLeft, ASTVar * const t_pRight) :
     ASTNode(t_referenceLine), m_op(t_op), 
     pLeft(t_pLeft), pRight(t_pRight)
@@ -28,7 +28,7 @@ ASTBool::ASTBool(unsigned int t_referenceLine, const Op t_op,
     
 }
 
-ASTBool::~ASTBool()
+ASTBoolExpr::~ASTBoolExpr()
 {
     delete pLeft;
     delete pRight;
@@ -45,7 +45,7 @@ std::string ASTBoolExpr::orderHandle(ASTBool * const t_pBool) const
     return t_pBool->process();
 }
 
-virtual std::string ASTBool::process() const
+virtual std::string ASTBoolExpr::process() const
 {
     std::strint rStr = ((isInversed()) ? "NOT(" : "") + orderHandle(pLeft);
     switch(m_op)
@@ -86,12 +86,12 @@ virtual std::string ASTBool::process() const
     return rStr;
 }
 
-bool ASTBool::demorganFlip() const
+bool ASTBoolExpr::demorganFlip() const
 {
     return pLeft->isInversed() || pRight->isInversed();
 }
 
-void ASTBool::inverse()
+void ASTBoolExpr::inverse()
 {
     switch(m_op)
     {

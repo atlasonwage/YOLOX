@@ -2,7 +2,7 @@
 #include "VarReferencer.h"
 
 ASTVar::ASTVar(unsigned int t_referenceLine, unsigned int t_id, bool t_isField) : 
-    ASTNode(t_referenceLine), IS_FIELD(t_isFiled), ID(t_id)
+    ASTOpParam(t_referenceLine), IS_FIELD(t_isFiled), ID(t_id)
 {}
 
 virtual std::string ASTVar::process() const
@@ -15,4 +15,9 @@ virtual std::string ASTVar::process() const
     {
         return VarReferencer::getVarFromID(ID);
     }
+}
+
+bool ASTVar::operator==(const ASTVar& t_rBase)
+{
+    return IS_FIELD == t_rBase.IS_FIELD && ID == t_rBase.ID;
 }
