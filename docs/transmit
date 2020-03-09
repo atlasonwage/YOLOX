@@ -1,0 +1,10 @@
+#include "transmission_network.ynet"
+
+void main ()
+{
+    while (true)
+    {
+        //Components are accessed from the "transmission_network.ynet" file.
+        disp.value = rc.waitForMessage();
+    }
+}

@@ -1,0 +1,38 @@
+error
+    Represents an error has occurred.
+
+string
+    Holds arbitrary-length arrays of characters.
+
+    Mutable Operations:
+        Concatenate (+)
+        Last Appearance Removal (-)
+        Add space post or pre (++)
+        Remove a character (front or end) (--)
+        Assignment (=)
+        Concatencate Assignment (+=)
+        Removal Assignment (-=)
+    Comparison Operations:
+        All operations allowed
+            >, >=
+            <, <=
+            ==
+            !=
+
+number
+    A 64-bit floating point number accurate to 3 decimal places
+    Mutable Operations:
+        MDAS
+        MDAS Assignment
+        Increment and Decrement (post and pre)
+        Modulus and Modulus Assignment
+        Exponentiation
+        Absolute value (ABS)
+        Factorial
+        Square Root (SQRT)
+        Sine, Cosine, and Tangent
+        Inverse Sine, Cosine, and Tangent
+    Comparison Operations:
+        All are supported
+    Added Mutable Operations:
+        Exponentiation Assignment ("a ^= b" is equal to "a == a^b)

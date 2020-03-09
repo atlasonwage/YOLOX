@@ -1,0 +1,9 @@
+YOLOX (YOLOl eXtended) is a programming language used to make coding YOLOL easier, faster, and modular.
+
+YOLOX is written in a similar manner to C and compiles directly into YOLOL.
+YOLOX is case sensitive, unlike YOLOL.
+YOLOX can make variables strict in terms of typing.
+YOLOX adds new features to the langauge, including subroutines, loops, mutability, and casting.
+YOLOX also introduces data structures and object-oriented programming, with pre-build data structure for in-game devices.
+
+YOLOX also has multiple levels of optimization to run YOLOX code as fast as possible.
