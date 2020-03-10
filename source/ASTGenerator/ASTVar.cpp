@@ -1,11 +1,11 @@
 #include "ASTVar.h"
-#include "VarReferencer.h"
 
-ASTVar::ASTVar(unsigned int t_referenceLine, unsigned int t_id, bool t_isField) : 
-    ASTOpParam(t_referenceLine), IS_FIELD(t_isFiled), ID(t_id)
+ASTVar::ASTVar(unsigned int t_referenceLine, TID t_type, VID t_id, bool t_isField, 
+    bool t_isConst) : ASTOpParam(t_referenceLine), m_type(t_type),
+    IS_FIELD(t_isField), ID(t_id), IS_CONST(t_isConst)
 {}
 
-virtual std::string ASTVar::process() const
+std::string ASTVar::process() const
 {
     if (IS_FIELD)
     {
@@ -20,4 +20,9 @@ virtual std::string ASTVar::process() const
 bool ASTVar::operator==(const ASTVar& t_rBase)
 {
     return IS_FIELD == t_rBase.IS_FIELD && ID == t_rBase.ID;
+}
+
+TID ASTVar::getType() const
+{
+    return m_type;
 }

@@ -6,10 +6,11 @@ typedef unsigned int TID;
 
 namespace TypeService
 {
-    constexpr TID error = 0;
-    constexpr TID number = 1;
-    constexpr TID string = 2;
-    constexpr TID boolean = 3;
+    constexpr TID _void = 0;
+    constexpr TID error = 1;
+    constexpr TID number = 2;
+    constexpr TID string = 3;
+    constexpr TID boolean = 4;
 
     std::string getNameFromTID(const TID t_type);
     TID getTIDFromName(const std::string& t_rStr);

@@ -25,8 +25,9 @@ TID TypeService::addType(const std::string& t_rStr)
 
 void TypeService::initialize()
 {
-    typeTree.insert(std::string("error"), static_cast<TID>(0));
-    typeTree.insert(std::string("string"), static_cast<TID>(1));
-    typeTree.insert(std::string("number"), static_cast<TID>(2));
-    typeTree.insert(std::string("boolean"), static_cast<TID>(3));
+    typeTree.insert(std::string("void"), _void);
+    typeTree.insert(std::string("error"), error);
+    typeTree.insert(std::string("str"), string);
+    typeTree.insert(std::string("num"), number);
+    typeTree.insert(std::string("bool"), boolean);
 }

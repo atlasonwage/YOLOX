@@ -61,6 +61,27 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
             }
         }
     }
+    //Check for const violations
+    switch(m_op)
+    {
+    case ASSIGN:
+    case PRE_INC:
+    case POST_INC:
+    case PRE_DEC:
+    case POST_DEC:
+    case ADD_ASSIGN:
+    case SUB_ASSIGN:
+    case MUL_ASSIGN:
+    case DIV_ASSIGN:
+    case MOD_ASSIGN:
+    case EXP_ASSIGN:
+        ASTVar * const pVar = dynamic_cast<ASTVar*>(m_pLeft);
+        if (pVar && pVar->IS_CONST)
+        {
+            std::string str = "Assignment of constant type";
+            throwError(str, t_referenceLine);
+        }
+    }
     //Maybe check to remove unneeded assignments
 }
 
@@ -107,6 +128,15 @@ std::string ASTOp::process() const
     return rStr;
 }
 
+/* Operator overriding is not permitted currently.  Thus, all operations must be on
+ * numbers, strings, or bools.
+ * Only the left operator's type is passed, as all types will be explicitly casted.
+ */
+TID ASTOp::getType() const
+{
+    return m_pLeft->getType();
+}
+
 std::string ASTOp::opString(const Op t_op)
 {
     std::string rStr;
@@ -141,6 +171,7 @@ std::string ASTOp::opString(const Op t_op)
         rStr = "--";
         break;
     case ASSIGN:
+    case CASSIGN:
         rStr = "=";
         break;
     case ADD_ASSIGN:

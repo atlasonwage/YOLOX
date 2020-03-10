@@ -5,7 +5,7 @@
 class ASTOp : public ASTOpParam
 {
 public:
-    static enum Op {
+    enum Op {
         ADD,
         SUB,
         MUL,
@@ -17,6 +17,7 @@ public:
         PRE_DEC,
         POST_DEC,
         ASSIGN,
+        CASSIGN, //Constant assign
         ADD_ASSIGN,
         SUB_ASSIGN,
         MUL_ASSIGN,
@@ -38,6 +39,7 @@ public:
         ASTOpParam * const t_pLeft, ASTOpParam * const t_pRight = nullptr);
     ~ASTOp();
     virtual std::string process() const override;
+    TID getType() const override;
 private:
     static std::string opString(const Op t_op);
 

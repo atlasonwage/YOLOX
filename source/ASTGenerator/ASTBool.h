@@ -8,5 +8,10 @@ public:
     {}
 
     virtual void inverse() = 0;
-    virtual void isInversed() = 0;
+    virtual bool isInversed() const = 0;
+
+    TID getType() const override
+    {
+        return TypeService::boolean;
+    }
 };

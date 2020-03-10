@@ -1,12 +1,13 @@
 #include "ASTBoolVar.h"
 
-ASTBoolVar::ASTBoolVar(unsigned int t_referenceLine, unsigned int t_id, bool t_isField) :
-    ASTVar(t_referenceLine, t_id, t_isField)
+ASTBoolVar::ASTBoolVar(unsigned int t_referenceLine, unsigned int t_id, bool t_isField,
+    bool t_isConst) : ASTVar(t_referenceLine, t_id, t_isField, t_isConst),
+    ASTBool(t_referenceLine)
 {}
 
-virtual std::string ASTBoolVar::process() const
+std::string ASTBoolVar::process() const
 {
-    string rStr;
+    std::string rStr;
     if (m_isInversed)
     {
         rStr = "NOT(";
@@ -19,12 +20,12 @@ virtual std::string ASTBoolVar::process() const
     return rStr;
 }
 
-virtual void ASTBoolVar::inverse()
+void ASTBoolVar::inverse()
 {
     m_isInversed = !m_isInversed;
 }
 
-virtual bool ASTBoolVar::m_isInversed() const
+bool ASTBoolVar::isInversed() const
 {
     return m_isInversed;
 }

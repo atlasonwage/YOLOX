@@ -2,6 +2,7 @@
 #include "ASTBool.h"
 
 //Implements a conditional.
+//Conditionals have line priority.
 class ASTConditional : public ASTNode
 {
 public:

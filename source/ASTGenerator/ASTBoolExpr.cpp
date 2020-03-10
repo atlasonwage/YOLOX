@@ -1,8 +1,8 @@
 #include "ASTBoolExpr.h"
 
 ASTBoolExpr::ASTBoolExpr(unsigned int t_referenceLine, const Op t_op, 
-    ASTVar * const t_pLeft, ASTVar * const t_pRight) :
-    ASTNode(t_referenceLine), m_op(t_op), 
+    ASTBool * const t_pLeft, ASTBool * const t_pRight) :
+    ASTBool(t_referenceLine), m_op(t_op), 
     pLeft(t_pLeft), pRight(t_pRight)
 {
     if (pLeft->isInversed() && pRight->isInversed())
@@ -38,16 +38,16 @@ ASTBoolExpr::~ASTBoolExpr()
 //May add order-of-operations in the future for better optimization
 std::string ASTBoolExpr::orderHandle(ASTBool * const t_pBool) const
 {
-    if (dynamic_cast<ASTBoolExpr>(t_pBool))
+    if (dynamic_cast<ASTBoolExpr*>(t_pBool))
     {  
         return "(" + t_pBool->process() + ")";
     }
     return t_pBool->process();
 }
 
-virtual std::string ASTBoolExpr::process() const
+std::string ASTBoolExpr::process() const
 {
-    std::strint rStr = ((isInversed()) ? "NOT(" : "") + orderHandle(pLeft);
+    std::string rStr = ((isInversed()) ? "NOT(" : "") + orderHandle(pLeft);
     switch(m_op)
     {
     case LTHN:
@@ -79,7 +79,7 @@ virtual std::string ASTBoolExpr::process() const
     }
 
     rStr += orderHandle(pRight) + ((isInversed()) ? ")" : "");
-    if (rStr > MAX_LINE_LENGTH)
+    if (rStr.size() > MAX_LINE_LENGTH)
     {
         //error
     }
@@ -99,7 +99,7 @@ void ASTBoolExpr::inverse()
         m_op = GTHNEQ;
         break;
     case LTHNEQ:
-        m_op = GTHEN;
+        m_op = GTHN;
         break;
     case GTHN:
         m_op = LTHNEQ;
@@ -146,9 +146,9 @@ void ASTBoolExpr::inverse()
     }
 }
 
-virtual bool ASTBoolExpr::isInversed() const
+bool ASTBoolExpr::isInversed() const
 {
-    switch(m_op):
+    switch(m_op)
     {
     case NAND:
     case NOR:
