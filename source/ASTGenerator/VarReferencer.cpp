@@ -13,7 +13,31 @@ struct SearchPair
 {
     VarCategory vType;
     TID     id;
+
+    friend bool operator< (const SearchPair& t_left, const SearchPair& t_right)
+    {
+        return (t_left.vType == t_right.vType) ? (t_left.id < t_right.id)
+            : (t_left.vType < t_right.vType);
+    }
+
+    SearchPair(const VarCategory t_type, const TID t_id) :
+        vType(t_type), id(t_id) {}
+    SearchPair() : SearchPair(VarCategory::ERROR, 0) {}
+    ~SearchPair() {}
 };
+
+VarReferencer::VarInfo::VarInfo(const VarCategory t_type, const VID t_id, 
+    const std::string& t_translationName, const std::string& t_compiledName) :
+    vType(t_type), id(t_id), translationName(t_translationName),
+    compiledName(t_compiledName)
+{}
+VarReferencer::VarInfo::VarInfo() : VarInfo(VarCategory::ERROR, 0,
+    std::string(), std::string())
+{}
+
+VarReferencer::VarInfo::~VarInfo()
+{}
+
 
 std::map<std::string, SearchPair>               translateMap;
 std::map<SearchPair, VarReferencer::VarInfo>    infoMap;
@@ -122,4 +146,6 @@ const VID VarReferencer::registerSubroutineVars(unsigned int t_paramCount)
             VarInfo{VarCategory::SUBROUTINE, id + i, std::string(), name}            
         ));
     }
+
+    return id;
 }

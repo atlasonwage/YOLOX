@@ -17,6 +17,7 @@ public:
     ASTNode(unsigned int t_referenceLineNumber, bool t_linePriority = false) :
         LINE_NUM (t_referenceLineNumber), m_linePriority(t_linePriority)
     {}
+    virtual ~ASTNode() = 0;
 
     bool errored() const;
 protected:

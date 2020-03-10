@@ -2,7 +2,7 @@
 #include "ASTVar.h"
 
 ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
-    ASTOpParam * const t_pLeft, ASTOpParam * const t_pRight = nullptr) :
+    ASTOpParam * const t_pLeft, ASTOpParam * const t_pRight) :
     ASTOpParam(t_referenceLine), m_op(t_op), m_pLeft(t_pLeft), m_pRight(t_pRight)
 {
     //Check for assignment optimizations
@@ -14,11 +14,12 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
         {
             bool upgrade = false;
             //Is the assignment target the same?
+            ASTVar * pVar;
             switch(pAssignee->m_op)
             {
             case ADD:
             case MUL:
-                ASTVar * pVar = dynamic_cast<ASTVar*>(pAssignee->m_pRight);
+                pVar = dynamic_cast<ASTVar*>(pAssignee->m_pRight);
                 if (pVar && *pVar == *reinterpret_cast<ASTVar*>(m_pLeft))
                 {
                     upgrade = true;
@@ -27,7 +28,7 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
             case SUB:
             case DIV:
             case MOD:
-                ASTVar * pVar = dynamic_cast<ASTVar*>(pAssignee->m_pLeft);
+                pVar = dynamic_cast<ASTVar*>(pAssignee->m_pLeft);
                 if (pVar && *pVar == *reinterpret_cast<ASTVar*>(m_pLeft))
                 {
                     upgrade = true;
@@ -54,9 +55,13 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
                     case MOD:
                         m_op = MOD_ASSIGN;
                         break;
+                    default:
+                        break;
                     }
                     delete pAssignee;
                 }
+                break;
+            default:
                 break;
             }
         }
@@ -75,12 +80,17 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
     case DIV_ASSIGN:
     case MOD_ASSIGN:
     case EXP_ASSIGN:
+    {
         ASTVar * const pVar = dynamic_cast<ASTVar*>(m_pLeft);
         if (pVar && pVar->IS_CONST)
         {
             std::string str = "Assignment of constant type";
             throwError(str);
         }
+    }
+        break;
+    default:
+        break;
     }
 
     //Check for type violations

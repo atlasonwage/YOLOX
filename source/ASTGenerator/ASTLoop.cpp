@@ -2,10 +2,10 @@
 #include "ASTConditional.h"
 
 ASTLoop::ASTLoop(unsigned int t_referenceLine, ASTBool * const t_pCondtion, 
-        ASTBlock * const t_pBody, const ConditionalCheck t_check = PRE, 
-        ASTBlock * const t_pInitializerBlock = nullptr,
-        ASTBlock * const t_pPostUpdateBlock = nullptr) : ASTNode(t_referenceLine, true),
-        m_pCondition(t_pCondtion), m_pBody(t_pBody), m_check(t_check),
+        ASTBlock * const t_pBody, const ConditionalCheck t_check, 
+        ASTBlock * const t_pInitializerBlock,
+        ASTBlock * const t_pPostUpdateBlock) : ASTNode(t_referenceLine, true),
+        m_check(t_check), m_pCondition(t_pCondtion), m_pBody(t_pBody),
         m_pInitialize(t_pInitializerBlock)
 {
     //the update block cannot be used with a post-check direction

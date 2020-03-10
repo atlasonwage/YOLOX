@@ -17,9 +17,14 @@ namespace TypeService
     {
         std::string name;
         const TID id;
-        const std::string * aMembers;   //nullptr   for primitives
-        const TID * aTypes;             //nullptr   for primitives
-        const TID numTypes;             //0         for primitives
+        const std::string * const aMembers; //nullptr   for primitives
+        const TID * const aTypes;           //nullptr   for primitives
+        const unsigned int numTypes;        //0         for primitives
+
+        TypeInfo(const std::string& t_name, const TID t_id,
+            const std::string * const t_aMembers, 
+            const TID * const t_aTypes, const unsigned int t_numTypes);
+        ~TypeInfo();
     };
 
     const TypeInfo getInfo(const TID t_type);
@@ -39,7 +44,4 @@ namespace TypeService
 
     //Does set-up.  Run once before this service is used.
     void initialize();
-
-    //Cleans up all dynamically-allocated arrays.
-    void cleanUp();
 }

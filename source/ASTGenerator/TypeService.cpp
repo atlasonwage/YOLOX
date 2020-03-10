@@ -3,10 +3,22 @@
 #include <map>
 #include <vector>
 
+TypeService::TypeInfo::TypeInfo(const std::string& t_name, const TID t_id,
+    const std::string * const t_aMembers, const TID * const t_aTypes, 
+    const unsigned int t_numTypes) : name(t_name), id(t_id),
+    aMembers(t_aMembers), aTypes(t_aTypes), numTypes(t_numTypes)
+{}
+
+TypeService::TypeInfo::~TypeInfo()
+{
+    delete[] aMembers;
+    delete[] aTypes;
+}
+
 TID nextID = 0;
 
 std::map<std::string, TID> keyMap;
-std::vector<TID, TypeService::TypeInfo> valueMap;
+std::vector<TypeService::TypeInfo> valueMap;
 
 const TypeService::TypeInfo TypeService::getInfo(const std::string& t_rStr)
 {
@@ -25,28 +37,13 @@ const TypeService::TypeInfo TypeService::addType(const std::string& t_rStr,
     const TID id = nextID++;
     keyMap[t_rStr] = id;
     valueMap.emplace_back(t_rStr, id, t_aMembers, t_aTypes, t_typeCount);
+    return valueMap[id];
 }
 void TypeService::initialize()
 {
-    valueMap[_void]     = TypeInfo{std::string("void"),     _void,      nullptr, nullptr, 0};
-    valueMap[error]     = TypeInfo{std::string("error"),    error,      nullptr, nullptr, 0};
-    valueMap[string]    = TypeInfo{std::string("str"),      string,     nullptr, nullptr, 0};
-    valueMap[number]    = TypeInfo{std::string("num"),      number,     nullptr, nullptr, 0};
-    valueMap[boolean]   = TypeInfo{std::string("bool"),     boolean,    nullptr, nullptr, 0};
-}
-
-void TypeService::cleanUp()
-{
-    keyMap.clear();
-    auto begin = valueMap.begin();
-    auto end = valueMap.end();
-    //Skip the primitives
-    for (unsigned int i = 0; i <= boolean; ++i, ++begin) {}
-    
-    //Remove dymanically-allocated types
-    while (begin != end)
-    {
-        delete[] begin->second.pType;
-        ++begin;
-    }
+    valueMap.emplace_back(std::string("void"),  _void,      nullptr, nullptr, 0);
+    valueMap.emplace_back(std::string("error"), error,      nullptr, nullptr, 0);
+    valueMap.emplace_back(std::string("str"),   string,     nullptr, nullptr, 0);
+    valueMap.emplace_back(std::string("num"),   number,     nullptr, nullptr, 0);
+    valueMap.emplace_back(std::string("bool"),  boolean,    nullptr, nullptr, 0);
 }

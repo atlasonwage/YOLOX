@@ -4,7 +4,8 @@
 
 typedef unsigned int VID;
 
-enum class VarCategory {LOCAL = 0, FIELD, SUBROUTINE};
+//Error represents an internal error
+enum class VarCategory {LOCAL = 0, FIELD, SUBROUTINE, ERROR};
 
 namespace VarReferencer
 {
@@ -14,6 +15,11 @@ namespace VarReferencer
         const VID id;                       //IDs are unique within the same var. types
         const std::string translationName;
         std::string compiledName;
+
+        VarInfo(const VarCategory t_type, const VID t_id, 
+            const std::string& t_translationName, const std::string& t_compiledName);
+        VarInfo();
+        ~VarInfo();
     };
 
     const VarInfo registerVar(const std::string& t_rStr);

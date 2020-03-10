@@ -9,8 +9,8 @@ public:
         VID t_id, bool is_const = false);
 
     virtual std::string process() override;
-    virtual void inverse();
-    virtual bool isInversed() const;
+    void inverse() override;
+    bool isInversed() const override;
 
     bool operator==(const ASTBoolVar& t_rBase);
 private:

@@ -2,8 +2,7 @@
 
 ASTBoolExpr::ASTBoolExpr(unsigned int t_referenceLine, const Op t_op, 
     ASTBool * const t_pLeft, ASTBool * const t_pRight) :
-    ASTBool(t_referenceLine), m_op(t_op), 
-    pLeft(t_pLeft), pRight(t_pRight)
+    ASTBool(t_referenceLine), pLeft(t_pLeft), pRight(t_pRight), m_op(t_op)
 {
     if (pLeft->isInversed() && pRight->isInversed())
     {
@@ -22,6 +21,8 @@ ASTBoolExpr::ASTBoolExpr(unsigned int t_referenceLine, const Op t_op,
                 break;
             case NOR:
                 m_op = AND;
+                break;
+            default:
                 break;
         }
     }

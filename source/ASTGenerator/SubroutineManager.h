@@ -9,22 +9,24 @@ namespace SubroutineManager
 {
     struct SubroutineStruct
     {
-        const unsigned int line;              //Zero until the code compiles, then is filled in.  Used for function call replacements.
-        const SID id;                         //Subroutines with different parameter lists will have different SIDs
+        unsigned int line;              //Zero until the code compiles, then is filled in.  Used for function call replacements.
+        const SID id;                   //Subroutines with different parameter lists will have different SIDs
         std::string name;
-        ASTVar entryPoint;              //guarenteed to exist and to be of type "number"
-        union RET_VAR                     //may exist; to check if it is boolean, check the type of nonBinary
+        ASTVar entryPoint;              //guarenteed to exist and to be of type "number".
+        union RET_VAR                   //may exist; to check if it is boolean, check the type of nonBinary
         {
             ASTVar nonBinary;
             ASTBoolVar binary;
 
             RET_VAR(const ASTVar& t_rBase);
             RET_VAR(const ASTBoolVar& t_rBase);
+            ~RET_VAR();
         } returnVar;
         std::vector<ASTVar> parameters; //may not have any parameters
-        ASTNode * const pBody;
+        ASTNode * const pBody;          //if nullptr, then an internal system error has occured.
 
         bool operator==(const SubroutineStruct& t_rBase);
+        SubroutineStruct();
         SubroutineStruct(const SubroutineStruct& t_rBase);
 
         SubroutineStruct(unsigned int t_line, SID t_id, const std::string& t_name, 
@@ -34,6 +36,8 @@ namespace SubroutineManager
         SubroutineStruct(unsigned int t_line, SID t_id, const std::string& t_name, 
             const ASTVar& t_entryPoint, const ASTBoolVar& t_returnVar, 
             const std::vector<ASTVar>& t_parameters, ASTNode * const t_pBody);
+
+        ~SubroutineStruct();
     };
 
     //Register a subroutine to the service

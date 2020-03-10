@@ -1,8 +1,8 @@
 #include "ASTBoolVar.h"
 
 ASTBoolVar::ASTBoolVar(unsigned int t_referenceLine, const VarCategory t_category,
-    TID t_id, bool t_isConst) : ASTVar(t_referenceLine, TypeService::boolean, t_category, 
-    t_id, t_isConst), ASTBool(t_referenceLine)
+    TID t_id, bool t_isConst) : ASTBool(t_referenceLine), 
+    ASTVar(t_referenceLine, TypeService::boolean, t_category, t_id, t_isConst)
 {}
 
 std::string ASTBoolVar::process()

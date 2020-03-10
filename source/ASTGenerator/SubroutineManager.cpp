@@ -14,6 +14,7 @@ std::string standardName (const std::string& t_name, const std::vector<TID>& t_p
     {
         rStr += "." + std::to_string(t_params[i]);
     }
+    return rStr;
 }
 
 //Value equality is ID based
@@ -30,13 +31,20 @@ SubroutineManager::SubroutineStruct::RET_VAR::RET_VAR(const ASTBoolVar& t_rBase)
     binary(t_rBase)
 {}
 
+SubroutineManager::SubroutineStruct::RET_VAR::~RET_VAR() {}
+
+SubroutineManager::SubroutineStruct::SubroutineStruct() :
+    SubroutineStruct(0, 0, std::string(), ASTVar(0, 0, VarCategory::ERROR, 0), 
+        ASTVar(0, 0, VarCategory::ERROR, 0), std::vector<ASTVar>(), nullptr)
+{}
+
 SubroutineManager::SubroutineStruct::SubroutineStruct(const SubroutineStruct& t_rBase) : 
     line(t_rBase.line), id(t_rBase.id), name(t_rBase.name), entryPoint(t_rBase.entryPoint),
-    parameters(t_rBase.parameters), pBody(t_rBase.pBody), returnVar(
+    returnVar(
         (t_rBase.returnVar.nonBinary.getType() == TypeService::boolean)
         ? t_rBase.returnVar.binary
         : t_rBase.returnVar.nonBinary
-    )
+    ), parameters(t_rBase.parameters), pBody(t_rBase.pBody)
 {}
 
 SubroutineManager::SubroutineStruct::SubroutineStruct(unsigned int t_line, SID t_id,
@@ -53,6 +61,11 @@ SubroutineManager::SubroutineStruct::SubroutineStruct(unsigned int t_line, SID t
     returnVar(t_returnVar), parameters(t_parameters), pBody(t_pBody)
 {}
 
+SubroutineManager::SubroutineStruct::~SubroutineStruct()
+{
+    delete pBody;
+}
+
 const SubroutineManager::SubroutineStruct SubroutineManager::registerSubroutine(const std::string& t_name, 
     unsigned int t_referenceLine, TID t_returnType, const std::vector<TID>& t_params, 
     ASTNode * const t_pBodyRoot)
@@ -64,6 +77,7 @@ const SubroutineManager::SubroutineStruct SubroutineManager::registerSubroutine(
         params.emplace_back(
             t_referenceLine,
             t_params[i],
+            VarCategory::SUBROUTINE,
             startId + 2 + i,
             false
         );
@@ -81,6 +95,7 @@ const SubroutineManager::SubroutineStruct SubroutineManager::registerSubroutine(
                 startId + 1, false)),
         params,
         t_pBodyRoot}));
+    return structMap[id];
 }
     
 SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const std::string& t_name,
