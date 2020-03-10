@@ -45,7 +45,7 @@ std::string ASTBoolExpr::orderHandle(ASTBool * const t_pBool) const
     return t_pBool->process();
 }
 
-std::string ASTBoolExpr::process() const
+std::string ASTBoolExpr::process()
 {
     std::string rStr = ((isInversed()) ? "NOT(" : "") + orderHandle(pLeft);
     switch(m_op)
@@ -81,7 +81,8 @@ std::string ASTBoolExpr::process() const
     rStr += orderHandle(pRight) + ((isInversed()) ? ")" : "");
     if (rStr.size() > MAX_LINE_LENGTH)
     {
-        //error
+        std::string str = "Boolean expression is too long.  Consider using a higher optimization level.";
+        throwError(str);
     }
     return rStr;
 }

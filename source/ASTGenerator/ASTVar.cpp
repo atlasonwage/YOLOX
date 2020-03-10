@@ -5,7 +5,7 @@ ASTVar::ASTVar(unsigned int t_referenceLine, TID t_type, const VarCategory t_cat
     CATEGORY(t_category), ID(t_id), IS_CONST(t_isConst)
 {}
 
-std::string ASTVar::process() const
+std::string ASTVar::process()
 {
     return VarReferencer::getVarInfo(CATEGORY, ID).compiledName;
 }

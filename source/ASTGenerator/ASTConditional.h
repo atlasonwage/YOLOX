@@ -10,7 +10,7 @@ public:
         ASTNode * const t_pTrue, ASTNode * const t_pFalse = nullptr);
     ~ASTConditional();
 
-    virtual std::string process() const override;
+    virtual std::string process() override;
 private:
     ASTBool * const m_pConditional;
     ASTNode * const m_pTrue;

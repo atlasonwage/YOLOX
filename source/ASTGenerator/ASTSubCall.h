@@ -11,7 +11,7 @@ public:
     ASTSubCall(unsigned int t_referenceLine, SID t_id, const std::vector<ASTOpParam*> t_params);
     ~ASTSubCall();
     
-    virtual std::string process() const override;
+    virtual std::string process() override;
 private:
     const SID m_id;
     std::vector<ASTOpParam*> m_params;

@@ -23,7 +23,7 @@ ASTLoop::~ASTLoop()
     delete m_pCondition;
 }
 
-std::string ASTLoop::process() const
+std::string ASTLoop::process()
 {
     std::string rStr;
     std::string body = m_pBody->process();

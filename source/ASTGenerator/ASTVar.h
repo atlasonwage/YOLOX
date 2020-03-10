@@ -12,7 +12,7 @@ public:
 
     ASTVar(unsigned int t_referenceLine, TID t_type, 
         const VarCategory t_category, VID t_id, bool t_isConst = false);
-    virtual std::string process() const override;
+    virtual std::string process() override;
 
     bool operator==(const ASTVar& t_rBase);
 

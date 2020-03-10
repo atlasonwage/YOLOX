@@ -79,7 +79,7 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
         if (pVar && pVar->IS_CONST)
         {
             std::string str = "Assignment of constant type";
-            throwError(str, t_referenceLine);
+            throwError(str);
         }
     }
 
@@ -88,7 +88,7 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
     {
         std::string str = "Type mismatch: " + TypeService::getInfo(m_pLeft->getType()).name
             + ", " + TypeService::getInfo(m_pRight->getType()).name;
-        throwError(str, t_referenceLine);
+        throwError(str);
     }
 
     //Maybe check to remove unneeded assignments
@@ -100,7 +100,7 @@ ASTOp::~ASTOp()
     delete m_pRight;
 }
 
-std::string ASTOp::process() const
+std::string ASTOp::process()
 {
     std::string rStr;
 

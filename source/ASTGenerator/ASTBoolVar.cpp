@@ -5,7 +5,7 @@ ASTBoolVar::ASTBoolVar(unsigned int t_referenceLine, const VarCategory t_categor
     t_id, t_isConst), ASTBool(t_referenceLine)
 {}
 
-std::string ASTBoolVar::process() const
+std::string ASTBoolVar::process()
 {
     std::string rStr;
     if (m_isInversed)

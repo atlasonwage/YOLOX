@@ -12,7 +12,7 @@ public:
     ~ASTBlock();
     
     //Processes the children and this node.
-    std::string process() const override;
+    std::string process() override;
 
     //A child is added to the node.
     void addChild(ASTNode * const t_pChild);

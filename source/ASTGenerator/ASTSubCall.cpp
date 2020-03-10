@@ -37,7 +37,7 @@ ASTSubCall::ASTSubCall (unsigned int t_referenceLine, SID t_id,
             }
             str += ").";
         }
-        throwError(str, t_referenceLine);
+        throwError(str);
     }
 }
 
@@ -49,10 +49,10 @@ ASTSubCall::~ASTSubCall ()
     }
 }
 
-std::string ASTSubCall::process() const
+std::string ASTSubCall::process()
 {
     std::string rStr;
-    const SubroutineManager::SubroutineStruct& str = SubroutineManager::getSubroutine(m_id);
+    SubroutineManager::SubroutineStruct str = SubroutineManager::getSubroutine(m_id);
     std::string line;
     for(unsigned int i = 0; i < m_params.size(); ++i)
     {
@@ -60,7 +60,7 @@ std::string ASTSubCall::process() const
         if (text.size() > MAX_LINE_LENGTH)
         {
             rStr = "Parameter expression is too large.  Consider using a variable or using a higher optimization level.";
-            throwError(rStr, m_params[i]->LINE_NUM);
+            throwError(rStr);
         }
 
         if (line.size() == 0)

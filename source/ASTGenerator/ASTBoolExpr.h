@@ -25,7 +25,7 @@ public:
     ASTBoolExpr(unsigned int t_referenceLine, const Op t_op, 
         ASTBool * const t_pLeft, ASTBool * const t_pRight = nullptr);
     ~ASTBoolExpr();
-    virtual std::string process() const override;
+    virtual std::string process() override;
 
     virtual void inverse() override;
     virtual bool isInversed() const override;

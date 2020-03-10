@@ -8,7 +8,7 @@ public:
     ASTBoolVar(unsigned int t_referenceLine, const VarCategory t_category, 
         VID t_id, bool is_const = false);
 
-    virtual std::string process() const override;
+    virtual std::string process() override;
     virtual void inverse();
     virtual bool isInversed() const;
 

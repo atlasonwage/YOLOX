@@ -12,7 +12,7 @@ ASTConditional::~ASTConditional()
     delete m_pFalse;
 }
 
-std::string ASTConditional::process() const
+std::string ASTConditional::process()
 {
     std::string rStr;
     std::string rCond = m_pConditional->process();
@@ -55,7 +55,7 @@ std::string ASTConditional::process() const
             {
                 rStr = "Condition text was too large.  Consider renaming variables or \
                         using a higher optimization level.";
-                throwError(rStr, LINE_NUM);
+                throwError(rStr);
             }
         }
     }
@@ -81,7 +81,7 @@ std::string ASTConditional::process() const
             {
                 rStr = "Condition text was too large.  Consider renaming variables or \
                         using a higher optimization level.";
-                throwError(rStr, LINE_NUM);
+                throwError(rStr);
             }
         }
     }

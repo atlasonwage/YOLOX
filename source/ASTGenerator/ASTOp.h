@@ -38,7 +38,7 @@ public:
     ASTOp(unsigned int t_referenceLine, const Op t_op, 
         ASTOpParam * const t_pLeft, ASTOpParam * const t_pRight = nullptr);
     ~ASTOp();
-    virtual std::string process() const override;
+    virtual std::string process() override;
     TID getType() const override;
 private:
     static std::string opString(const Op t_op);

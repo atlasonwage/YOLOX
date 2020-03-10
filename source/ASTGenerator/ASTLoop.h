@@ -15,7 +15,7 @@ public:
         ASTBlock * const t_pPostUpdateBlock = nullptr);
     ~ASTLoop();
 
-    std::string process() const override;
+    std::string process() override;
 private:
     const ConditionalCheck m_check;
     ASTBool * const m_pCondition;

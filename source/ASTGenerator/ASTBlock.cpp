@@ -12,7 +12,7 @@ ASTBlock::~ASTBlock()
     }
 }
 
-std::string ASTBlock::process() const
+std::string ASTBlock::process()
 {
     std::string rStr;
     std::string line;

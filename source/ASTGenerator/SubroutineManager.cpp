@@ -83,12 +83,12 @@ const SubroutineManager::SubroutineStruct SubroutineManager::registerSubroutine(
         t_pBodyRoot}));
 }
     
-const SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const std::string& t_name,
+SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const std::string& t_name,
     const std::vector<TID>& t_params)
 {
     return getSubroutine(keyMap[standardName(t_name, t_params)]);
 }
-const SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const SID t_id)
+SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const SID t_id)
 {
     return structMap[t_id];
 }
