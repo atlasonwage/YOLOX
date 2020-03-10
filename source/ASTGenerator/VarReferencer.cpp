@@ -11,7 +11,7 @@ VID nextId[] = {0, 0, 0};
 
 struct SearchPair
 {
-    VarType vType;
+    VarCategory vType;
     TID     id;
 };
 
@@ -46,12 +46,12 @@ std::string idToName(VID t_id)
 }
 
 std::string optimizeName(const std::string& t_rStr, 
-    const VarType t_type)
+    const VarCategory t_type)
 {
     const IdentifierOptimizationLevel optLevel =
-        (t_type == VarType::LOCAL) ? varOptimizationLevel :
+        (t_type == VarCategory::LOCAL) ? varOptimizationLevel :
         (
-            (t_type == VarType::FIELD) ? fieldOptimizationLevel :
+            (t_type == VarCategory::FIELD) ? fieldOptimizationLevel :
                 IdentifierOptimizationLevel::HIGH
         );
     switch(optLevel)
@@ -64,14 +64,14 @@ std::string optimizeName(const std::string& t_rStr,
         return t_rStr;
 
     case IdentifierOptimizationLevel::HIGH:
-        std::string name = ((t_type == VarType::FIELD) ? ":F" : "V") + 
+        std::string name = ((t_type == VarCategory::FIELD) ? ":F" : "V") + 
             idToName(translateMap[t_rStr].id);
         return name;
     }
 }
 
 const VarReferencer::VarInfo reg(
-    const std::string& t_rStr, const VarType t_type,
+    const std::string& t_rStr, const VarCategory t_type,
     const IdentifierOptimizationLevel t_optLevel)
 {
     const SearchPair pair = {t_type, nextId[static_cast<int>(t_type)]++};
@@ -88,16 +88,16 @@ const VarReferencer::VarInfo reg(
 const VarReferencer::VarInfo VarReferencer::registerVar
     (const std::string& t_rStr)
 {
-    return reg(t_rStr, VarType::LOCAL, varOptimizationLevel);
+    return reg(t_rStr, VarCategory::LOCAL, varOptimizationLevel);
 }
 
 const VarReferencer::VarInfo VarReferencer::registerField
     (const std::string& t_rStr)
 {
-    return reg(t_rStr, VarType::FIELD, fieldOptimizationLevel);
+    return reg(t_rStr, VarCategory::FIELD, fieldOptimizationLevel);
 }
 
-const VarReferencer::VarInfo VarReferencer::getVarInfo(const VarType t_type, const VID t_id)
+const VarReferencer::VarInfo VarReferencer::getVarInfo(const VarCategory t_type, const VID t_id)
 {
     return infoMap[SearchPair{t_type, t_id}];
 }
@@ -111,15 +111,15 @@ const VarReferencer::VarInfo getVarInfo(const std::string& t_name)
 const VID VarReferencer::registerSubroutineVars(unsigned int t_paramCount)
 {
     //Get IDs in use.
-    const VID id = nextId[static_cast<int>(VarType::SUBROUTINE)];
-    nextId[static_cast<int>(VarType::SUBROUTINE)] += 2 + t_paramCount;
+    const VID id = nextId[static_cast<int>(VarCategory::SUBROUTINE)];
+    nextId[static_cast<int>(VarCategory::SUBROUTINE)] += 2 + t_paramCount;
     //Note that no translation string is needed.
     for (unsigned int i = 0; i < 2 + t_paramCount; ++i)
     {
         std::string name = "S" + idToName(id + i);
         infoMap.emplace(std::make_pair(
-            SearchPair{VarType::SUBROUTINE, id + i},
-            VarInfo{VarType::SUBROUTINE, id + i, std::string(), name}            
+            SearchPair{VarCategory::SUBROUTINE, id + i},
+            VarInfo{VarCategory::SUBROUTINE, id + i, std::string(), name}            
         ));
     }
 }

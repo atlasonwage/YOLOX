@@ -5,7 +5,8 @@
 class ASTBoolVar : public ASTBool, public ASTVar
 {
 public:
-    ASTBoolVar(unsigned int t_referenceLine, VID t_id, bool t_isField, bool is_const = false);
+    ASTBoolVar(unsigned int t_referenceLine, const VarCategory t_category, 
+        VID t_id, bool is_const = false);
 
     virtual std::string process() const override;
     virtual void inverse();

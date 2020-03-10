@@ -73,10 +73,12 @@ const SubroutineManager::SubroutineStruct SubroutineManager::registerSubroutine(
     keyMap[name] = id;
     structMap.emplace(std::make_pair(id, SubroutineStruct{
         0, id, name, 
-        ASTVar(t_referenceLine, TypeService::number, startId, false), 
+        ASTVar(t_referenceLine, TypeService::number, VarCategory::SUBROUTINE, 
+            startId, false), 
         ((t_returnType == TypeService::boolean)
-            ? ASTBoolVar(t_referenceLine, TypeService::boolean, startId + 1, false)
-            : ASTVar(t_referenceLine, t_returnType, startId + 1, false)),
+            ? ASTBoolVar(t_referenceLine, VarCategory::SUBROUTINE, startId + 1)
+            : ASTVar(t_referenceLine, t_returnType, VarCategory::SUBROUTINE,
+                startId + 1, false)),
         params,
         t_pBodyRoot}));
 }
@@ -94,7 +96,8 @@ const SubroutineManager::SubroutineStruct SubroutineManager::getSubroutine(const
 const std::string printSub(const SubroutineManager::SubroutineStruct& t_rStruct)
 {
     std::string rStr = t_rStruct.pBody->process();
-    std::string entryPointVar = VarReferencer::getVarFromID(t_rStruct.entryPoint.ID);
+    std::string entryPointVar = VarReferencer::getVarInfo(VarCategory::SUBROUTINE, 
+        t_rStruct.entryPoint.ID).compiledName;
     if (lastLineLength(rStr) + 6 + entryPointVar.size() <= MAX_LINE_LENGTH)
     {
         rStr += " goto " + entryPointVar;
