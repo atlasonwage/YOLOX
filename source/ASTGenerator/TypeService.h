@@ -12,15 +12,21 @@ namespace TypeService
     constexpr TID string = 3;
     constexpr TID boolean = 4;
 
-    std::string getNameFromTID(const TID t_type);
-    TID getTIDFromName(const std::string& t_rStr);
+    struct TypeInfo
+    {
+        std::string name;
+        TID value;
+    };
+
+    const TypeInfo getInfo(const TID t_type);
+    const TypeInfo getInfo(const std::string& t_rStr);
 
     /**
      * Adds a new type to the service, if it does not already exist,
      * @param t_rStr The string name of the type.
      * @return The TID of the type.
      */
-    TID addType(const std::string& t_rStr);
+    const TypeInfo addType(const std::string& t_rStr);
 
     //Does set-up.  Run once before this service is used.
     void initialize();

@@ -82,6 +82,15 @@ ASTOp::ASTOp(unsigned int t_referenceLine, const Op t_op,
             throwError(str, t_referenceLine);
         }
     }
+
+    //Check for type violations
+    if (m_pRight && m_pLeft->getType() != m_pRight->getType())
+    {
+        std::string str = "Type mismatch: " + TypeService::getInfo(m_pLeft->getType()).name
+            + ", " + TypeService::getInfo(m_pRight->getType()).name;
+        throwError(str, t_referenceLine);
+    }
+
     //Maybe check to remove unneeded assignments
 }
 

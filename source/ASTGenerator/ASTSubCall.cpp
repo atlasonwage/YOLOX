@@ -30,10 +30,10 @@ ASTSubCall::ASTSubCall (unsigned int t_referenceLine, SID t_id,
         {
             str += "void).";
         } else {
-            str += TypeService::getNameFromTID(t_params[0]->getType());
+            str += TypeService::getInfo(t_params[0]->getType()).name;
             for (unsigned int i = 1; i < t_params.size(); ++i)
             {
-                str += ", " + TypeService::getNameFromTID(t_params[i]->getType());
+                str += ", " + TypeService::getInfo(t_params[i]->getType()).name;
             }
             str += ").";
         }
