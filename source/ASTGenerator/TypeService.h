@@ -6,6 +6,7 @@ typedef unsigned int TID;
 
 namespace TypeService
 {
+    //primitives
     constexpr TID _void = 0;
     constexpr TID error = 1;
     constexpr TID number = 2;
@@ -15,7 +16,10 @@ namespace TypeService
     struct TypeInfo
     {
         std::string name;
-        TID value;
+        const TID id;
+        const std::string * aMembers;   //nullptr for primitives
+        const TID * aTypes;
+        const TID numTypes;
     };
 
     const TypeInfo getInfo(const TID t_type);
@@ -23,11 +27,19 @@ namespace TypeService
 
     /**
      * Adds a new type to the service, if it does not already exist,
-     * @param t_rStr The string name of the type.
+     * @param t_rStr        The string name of the type.
+     * @param t_aTypes      A dynamically-allocated array containing all types.
+     * @param t_aMembers    The names of all of the members.
+     * @param t_numTypes    The number of types in the array.
      * @return The TID of the type.
      */
-    const TypeInfo addType(const std::string& t_rStr);
+    const TypeInfo addType(const std::string& t_rStr, const TID * const t_aTypes,
+        const std::string * const t_aMembers, const unsigned int t_numTypes);
+
 
     //Does set-up.  Run once before this service is used.
     void initialize();
+
+    //Cleans up all dynamically-allocated arrays.
+    void cleanUp();
 }
