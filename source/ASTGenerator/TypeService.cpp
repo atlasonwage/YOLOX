@@ -28,11 +28,11 @@ const TypeService::TypeInfo TypeService::addType(const std::string& t_rStr,
 }
 void TypeService::initialize()
 {
-    valueMap[_void]     = TypeInfo{std::string("void"),     _void,      nullptr, &_void,     1};
-    valueMap[error]     = TypeInfo{std::string("error"),    error,      nullptr, &error,     1};
-    valueMap[string]    = TypeInfo{std::string("str"),      string,     nullptr, &string,    1};
-    valueMap[number]    = TypeInfo{std::string("num"),      number,     nullptr, &number,    1};
-    valueMap[boolean]   = TypeInfo{std::string("bool"),     boolean,    nullptr, &boolean,   1};
+    valueMap[_void]     = TypeInfo{std::string("void"),     _void,      nullptr, nullptr, 0};
+    valueMap[error]     = TypeInfo{std::string("error"),    error,      nullptr, nullptr, 0};
+    valueMap[string]    = TypeInfo{std::string("str"),      string,     nullptr, nullptr, 0};
+    valueMap[number]    = TypeInfo{std::string("num"),      number,     nullptr, nullptr, 0};
+    valueMap[boolean]   = TypeInfo{std::string("bool"),     boolean,    nullptr, nullptr, 0};
 }
 
 void TypeService::cleanUp()
@@ -42,6 +42,7 @@ void TypeService::cleanUp()
     auto end = valueMap.end();
     //Skip the primitives
     for (unsigned int i = 0; i <= boolean; ++i, ++begin) {}
+    
     //Remove dymanically-allocated types
     while (begin != end)
     {

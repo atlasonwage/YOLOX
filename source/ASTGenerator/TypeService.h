@@ -17,9 +17,9 @@ namespace TypeService
     {
         std::string name;
         const TID id;
-        const std::string * aMembers;   //nullptr for primitives
-        const TID * aTypes;
-        const TID numTypes;
+        const std::string * aMembers;   //nullptr   for primitives
+        const TID * aTypes;             //nullptr   for primitives
+        const TID numTypes;             //0         for primitives
     };
 
     const TypeInfo getInfo(const TID t_type);
