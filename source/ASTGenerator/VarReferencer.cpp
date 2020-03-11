@@ -6,8 +6,13 @@
 IdentifierOptimizationLevel varOptimizationLevel = IdentifierOptimizationLevel::NONE;
 IdentifierOptimizationLevel fieldOptimizationLevel = IdentifierOptimizationLevel::NONE;
 
-//One id for each type of VariableType
-VID nextId[] = {0, 0, 0};
+namespace VarReferencer
+{
+    //One id for each type of VariableType
+    VID nextId[] = {0, 0, 0};
+}
+
+using namespace VarReferencer;
 
 struct SearchPair
 {

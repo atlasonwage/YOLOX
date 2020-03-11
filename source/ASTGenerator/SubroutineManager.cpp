@@ -2,10 +2,15 @@
 #include "VarReferencer.h"
 #include <map>
 
-SID nextId = 0;
+namespace SubroutineManager
+{
+    SID nextId = 0;
 
-std::map<std::string, SID> keyMap;
-std::map<SID, SubroutineManager::SubroutineStruct> structMap;
+    std::map<std::string, SID> keyMap;
+    std::map<SID, SubroutineManager::SubroutineStruct> structMap;
+}
+
+using namespace SubroutineManager;
 
 std::string standardName (const std::string& t_name, const std::vector<TID>& t_params)
 {

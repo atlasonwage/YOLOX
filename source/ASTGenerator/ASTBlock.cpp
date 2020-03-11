@@ -8,7 +8,7 @@ ASTBlock::~ASTBlock()
     //Cleans up children
     for(unsigned int i = 0; i < children.size(); ++i)
     {
-        delete &(children[i]);
+        delete children[i];
     }
 }
 
@@ -16,6 +16,7 @@ std::string ASTBlock::process()
 {
     std::string rStr;
     std::string line;
+    bool firstLine = true;
     for (unsigned int i = 0; i < children.size(); ++i)
     {
         std::string text = children[i]->process();
@@ -23,10 +24,11 @@ std::string ASTBlock::process()
         {
             line = text;
         }
-        else if (line.size() + text.size() + 1 > MAX_LINE_LENGTH
-            || (i > 0) ? (children[i-1]->m_linePriority) : false)
+        else if (((line.size() + text.size() + 1) > MAX_LINE_LENGTH)
+            || ((i > 0) ? (children[i-1]->m_linePriority) : false))
         {
-            rStr += "\n" + line;
+            rStr += ((firstLine) ? "" : "\n") + line;
+            firstLine = false;
             line = text;
         }
         else
@@ -35,7 +37,7 @@ std::string ASTBlock::process()
         }
     }
 
-    return rStr + line;
+    return rStr + ((firstLine) ? "" : "\n") + line;
 }
 
 void ASTBlock::addChild(ASTNode * const t_pNode)

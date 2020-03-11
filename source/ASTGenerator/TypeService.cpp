@@ -15,10 +15,13 @@ TypeService::TypeInfo::~TypeInfo()
     delete[] aTypes;
 }
 
-TID nextID = 0;
+namespace TypeService
+{
+    TID nextID = 0;
 
-std::map<std::string, TID> keyMap;
-std::vector<TypeService::TypeInfo> valueMap;
+    std::map<std::string, TID> keyMap;
+    std::vector<TypeService::TypeInfo> valueMap;
+}
 
 const TypeService::TypeInfo TypeService::getInfo(const std::string& t_rStr)
 {
